@@ -12,4 +12,4 @@ async def api():
 # Defines root route to UI
 @app.get("/")
 async def root():
-    return {"message": "Welcome to the UI"}
+    return {"message": "Welcome to the UI (more functionality to come"}
