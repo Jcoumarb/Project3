@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
@@ -10,6 +11,8 @@ async def api():
 
 
 # Defines root route to UI
-@app.get("/")
-async def root():
-    return {"message": "Welcome to the UI (more functionality to come"}
+#@app.get("/")
+#async def root():
+#    return {"message": "Welcome to the UI (more functionality to come"}
+
+app.mount("/", StaticFiles(directory="ui/dist", html=True), name="ui")
