@@ -3,6 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.future import select
 from models import AutoModels
+from fastapi.responses import HTMLResponse
 
 engine = create_async_engine("postgresql+asyncpg://postgres:postgres@db:5432/dvdrental", echo=True)
 
@@ -16,6 +17,26 @@ async def lifespan(app):
     print("shutdown")
 
 app = FastAPI(lifespan=lifespan)
+
+#Defines API rote to film view
+@app.get("/film/{id}", response_class=HTMLResponse)
+async def film(id: int):
+        with open("ui/dist/film.html") as file:
+            return file.read()
+
+#Defines API route to film data
+@app.get("/api/v1/film/{id}")
+async def get_film(id: int):
+    async with AsyncSession(engine) as session:
+        Film = await auto_models.get("film")
+        result = await session.execute(select(Film).where(Film.film_id == id))
+        film = result.scalars().first()
+
+        return {
+                "title": film.title,
+                "description": film.description,
+                "id": film.film_id,
+        }
 
 # Defines API route to hello
 @app.get("/api/v1/hello")
