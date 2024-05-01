@@ -1,3 +1,3 @@
-# Project 3
+# Project 3: Software Engineering Final Project
 
-At the moment, my intention is to create a to-do list manager
+DVD rental databse manager
