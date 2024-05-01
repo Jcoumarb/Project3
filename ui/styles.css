@@ -1,1 +1,9 @@
+#app {
+	display: flex;
+	flex-direction: column;
+}
 
+body {
+	color: blue;
+	background-color: #bfbfbf;
+}

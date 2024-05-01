@@ -14,6 +14,15 @@ async function fetchFilmData() {
 		return null;
 	}
 }
+
+async function deleteFilm() {
+	const filmId = window.location.pathname.split("/").pop();
+	const response = await fetch(`/api/v1/film/${filmId}`, {
+		method: 'DELETE'
+	});
+
+	window.location.href = "/";
+}
 async function main() {
 	const filmData = await fetchFilmData();
 
@@ -24,6 +33,7 @@ async function main() {
 		<div>
 			<h1>{filmData.title}</h1>
 			<p>{filmData.description}</p>
+			<button onClick={deleteFilm}>Delete Film</button>
 			<a href="/">Back to List View</a>
 		</div>
 	);

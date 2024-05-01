@@ -61,6 +61,22 @@ async def films():
                 })
     
     return results
+
+#Defines API route to delete film
+@app.delete("/api/v1/film/{id}")
+async def api_v1_film_delete(id: int):
+    Film = await auto_models.get("film")
+
+    async with AsyncSession(engine) as session:
+        film= await session.execute(select(Film).where(Film.film_id == id))
+        film = film.scalars().first()
+
+        if film:
+            await session.delete(film)
+            await session.commit()
+            return {"ok": True}
+        else:
+            return {"ok": False, "reason": "not found"}
             
 # Defines root route to UI
 # @app.get("/")
